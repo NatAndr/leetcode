@@ -21,20 +21,26 @@ public class MaximumProductSubarray {
         }
 
         int max = nums[0];
-        int cur = nums[0];
+        int min = nums[0];
+        int res = max;
 
         for (int i = 1; i < nums.length; i++) {
-            cur = Math.max(nums[i], cur * nums[i]);
-            max = Math.max(max, cur);
+            if (nums[i] < 0) {
+                int temp = max;
+                max = min;
+                min = temp;
+            }
+            max = Math.max(nums[i], max * nums[i]);
+            min = Math.min(nums[i], min * nums[i]);
+            res = Math.max(res, max);
         }
 
-        return max;
+        return res;
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{-2,3,-4};
+        int[] arr = new int[]{-2, -1, -4};
         int i = new MaximumProductSubarray().maxProduct(arr);
         System.out.println(i);
-
     }
 }
