@@ -6,22 +6,18 @@ public class PathSum {
 //Note: A leaf is a node with no children.
 
     public boolean hasPathSum(TreeNode root, int sum) {
-
-        return pathSum(root, 0, sum);
+        return traverse(root, sum);
     }
 
-    private boolean pathSum(TreeNode root, int initSum, int targetSum) {
-        if (root == null) {
-            return false;
+    private boolean traverse(TreeNode node, int restSum) {
+        if (node == null) return false;
+
+
+        if (node.left == null && node.right == null && node.val == restSum) {
+            return true;
         }
 
-        if (root.left == null && root.right == null) {
-            return root.val + initSum == targetSum;
-        }
-
-
-        return pathSum(root.left, root.val + initSum, targetSum) ||
-            pathSum(root.right, root.val + initSum, targetSum);
+        return traverse(node.left, restSum - node.val) || traverse(node.right, restSum - node.val);
     }
 
     public static void main(String[] args) {
