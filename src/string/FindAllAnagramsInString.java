@@ -63,9 +63,44 @@ public class FindAllAnagramsInString {
         return list;
     }
 
+    public List<Integer> findAnagrams2(String s, String p) {
+        List<Integer> list = new ArrayList<>();
+
+        if (s.length() < p.length()) {
+            return list;
+        }
+
+        int i = 0;
+        while (i <= s.length() - p.length()) {
+            if (isAnagram(s.substring(i, i + p.length()), p)) {
+                list.add(i);
+            }
+            i++;
+        }
+
+        return list;
+    }
+
+    private boolean isAnagram(String s1, String s2) {
+        int[] chars = new int[26];
+
+        for (int i = 0; i < s1.length(); i++) {
+            chars[s1.charAt(i) - 'a']++;
+            chars[s2.charAt(i) - 'a']--;
+        }
+
+        for (int c : chars) {
+            if (c != 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static void main(String[] args) {
-        List<Integer> list = new FindAllAnagramsInString().findAnagrams("cbaebabacd", "abc");
-//        List<Integer> list = new FindAllAnagramsInString().findAnagrams("abab", "ab");
+//        List<Integer> list = new FindAllAnagramsInString().findAnagrams_optimized("cbaebabacd", "abc");
+        List<Integer> list = new FindAllAnagramsInString().findAnagrams2("abab", "ab");
         System.out.println(list.toString());
     }
 }
